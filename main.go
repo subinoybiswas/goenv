@@ -16,6 +16,12 @@ func GetEnv(key string) (string, error) {
 func GetEnvFrmOS(key string) (string, error) {
 	return EnvGetter(key)
 }
+func GetEnvFrmFile(key string) (string, error) {
+	if err := godotenv.Overload(".env"); err != nil {
+		return "", errors.New("ENV ERROR")
+	}
+	return EnvGetter(key)
+}
 func EnvGetter(key string) (string, error) {
 	if value, exists := os.LookupEnv(key); exists {
 		return value, nil
